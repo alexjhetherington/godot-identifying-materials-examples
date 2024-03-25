@@ -1,0 +1,20 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://d1gtbkb6j8mos"]
+
+[ext_resource type="Shader" path="res://camera_custom_material/dual_material.gdshader" id="1_jxt0d"]
+[ext_resource type="Texture2D" uid="uid://bo6j4qc147k1m" path="res://_shared/rusty_metal_strips.png" id="2_3npth"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_jxt0d")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/point_size = null
+shader_parameter/roughness = null
+shader_parameter/metallic_texture_channel = null
+shader_parameter/specular = null
+shader_parameter/metallic = null
+shader_parameter/uv1_scale = Vector3(4, 4, 4)
+shader_parameter/uv1_offset = null
+shader_parameter/uv2_scale = null
+shader_parameter/uv2_offset = null
+shader_parameter/material_type = Color(0, 0, 1, 1)
+shader_parameter/texture_albedo = ExtResource("2_3npth")

@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://dbatmibq64acf"]
+
+[ext_resource type="Script" path="res://_shared/walker.gd" id="1_hjhld"]
+[ext_resource type="Script" path="res://raycast_mesh_pre_process/stepper.gd" id="2_wktrw"]
+[ext_resource type="PackedScene" uid="uid://bquks5idnheb8" path="res://raycast_mesh_pre_process/plane.glb" id="3_myavl"]
+
+[node name="scene" type="Node3D"]
+
+[node name="Player" type="Node3D" parent="."]
+transform = Transform3D(-0.193601, 0, 0.981081, 0, 1, 0, -0.98108, 0, -0.193601, 6.06379, 4.76837e-07, -2.34)
+script = ExtResource("1_hjhld")
+
+[node name="Stepper" type="Node3D" parent="Player"]
+script = ExtResource("2_wktrw")
+
+[node name="Camera3D" type="Camera3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.74716, 0)
+light_energy = 4.717
+omni_range = 19.0788
+
+[node name="plane" parent="." instance=ExtResource("3_myavl")]

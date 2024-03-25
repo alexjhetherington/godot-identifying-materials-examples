@@ -1,0 +1,111 @@
+[gd_scene load_steps=8 format=3 uid="uid://d3wwj4iysdktt"]
+
+[ext_resource type="Script" path="res://_shared/walker.gd" id="1_c3sdl"]
+[ext_resource type="Script" path="res://camera_duplicate_mesh/stepper.gd" id="2_krtqc"]
+[ext_resource type="PackedScene" uid="uid://eo5v3jbcelwi" path="res://camera_duplicate_mesh/plane.glb" id="3_i6kk7"]
+[ext_resource type="Texture2D" uid="uid://6o65g4h5nbkm" path="res://camera_duplicate_mesh/viewport_texture.tres" id="3_iiwek"]
+[ext_resource type="Material" uid="uid://lo370lxa32j4" path="res://camera_duplicate_mesh/grass_material_override.tres" id="4_ve71q"]
+[ext_resource type="Material" uid="uid://t47jh7xwalw2" path="res://camera_duplicate_mesh/metal_material_override.tres" id="5_e77qm"]
+[ext_resource type="Script" path="res://_shared/follows.gd" id="6_474ds"]
+
+[node name="scene" type="Node3D"]
+
+[node name="Player" type="Node3D" parent="."]
+transform = Transform3D(-0.193601, 0, 0.981081, 0, 1, 0, -0.98108, 0, -0.193601, 6.06379, 4.76837e-07, -2.34)
+script = ExtResource("1_c3sdl")
+
+[node name="Stepper" type="Node3D" parent="Player"]
+script = ExtResource("2_krtqc")
+viewport_texture = ExtResource("3_iiwek")
+
+[node name="Camera3D" type="Camera3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+cull_mask = 1047553
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.74716, 0)
+light_energy = 4.717
+omni_range = 19.0788
+
+[node name="PlanePlayer" parent="." instance=ExtResource("3_i6kk7")]
+
+[node name="PlaneMaterialOverride" parent="." instance=ExtResource("3_i6kk7")]
+
+[node name="Plane" parent="PlaneMaterialOverride" index="0"]
+layers = 2
+surface_material_override/0 = ExtResource("4_ve71q")
+surface_material_override/1 = ExtResource("5_e77qm")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MaterialViewDown" type="VBoxContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 200.0
+grow_vertical = 2
+alignment = 2
+
+[node name="Label" type="Label" parent="UI/MaterialViewDown"]
+layout_mode = 2
+text = "Material View: Down
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="UI/MaterialViewDown"]
+layout_mode = 2
+
+[node name="SubViewport" type="SubViewport" parent="UI/MaterialViewDown/SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(200, 180)
+render_target_update_mode = 4
+
+[node name="Follower" type="Node3D" parent="UI/MaterialViewDown/SubViewportContainer/SubViewport" node_paths=PackedStringArray("target")]
+script = ExtResource("6_474ds")
+target = NodePath("../../../../../Player/Camera3D")
+
+[node name="Camera3D" type="Camera3D" parent="UI/MaterialViewDown/SubViewportContainer/SubViewport/Follower"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+cull_mask = 1047554
+
+[node name="MaterialViewForward" type="VBoxContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -200.0
+grow_horizontal = 0
+grow_vertical = 2
+alignment = 2
+
+[node name="Label" type="Label" parent="UI/MaterialViewForward"]
+layout_mode = 2
+text = "Material View: Forward"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="UI/MaterialViewForward"]
+layout_mode = 2
+
+[node name="SubViewport" type="SubViewport" parent="UI/MaterialViewForward/SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(200, 180)
+render_target_update_mode = 4
+
+[node name="Follower" type="Node3D" parent="UI/MaterialViewForward/SubViewportContainer/SubViewport" node_paths=PackedStringArray("target")]
+script = ExtResource("6_474ds")
+target = NodePath("../../../../../Player/Camera3D")
+
+[node name="Camera3D" type="Camera3D" parent="UI/MaterialViewForward/SubViewportContainer/SubViewport/Follower"]
+cull_mask = 1047554
+
+[editable path="PlanePlayer"]
+[editable path="PlaneMaterialOverride"]
